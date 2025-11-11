@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Jaboatão - Apresentação</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: #0a0e0d;
+        }
+
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background: #0a0e0d;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: none;
+            padding: 100px 60px 60px 60px; /* Espaço extra no topo para a barra de navegação */
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-size: 4rem;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        h3 {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        p {
+            font-size: 1.5rem;
+            color: white;
+            text-align: center;
+            max-width: 900px;
+            line-height: 1.8;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            color: #f0f0f0;
+            margin-top: 10px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .feature-desc {
+            font-size: 1rem;
+            color: #f0f0f0;
+            line-height: 1.5;
+        }
+
+        .tech-list {
+            list-style: none;
+            max-width: 800px;
+            margin-top: 30px;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 20px 30px;
+            margin: 15px 0;
+            font-size: 1.2rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tech-icon {
+            font-size: 1.8rem;
+        }
+
+        /* Barra de navegação no topo */
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid white;
+            color: white;
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid white;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .logo {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .logo-img {
+            width: 200px;
+            height: auto;
+            margin-bottom: 30px;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin-top: 40px;
+        }
+
+        .column {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .column h4 {
+            color: #00ff88;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .column ul {
+            list-style: none;
+            text-align: left;
+        }
+
+        .column li {
+            color: white;
+            font-size: 1.1rem;
+            margin: 12px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .column li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #00ff88;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        /* Mockup Styles */
+        .mockup-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: flex-start;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 10;
+            max-width: 100%;
+            padding: 0 20px;
+        }
+
+        .phone-mockup {
+            width: 260px;
+            height: 520px;
+            background: #1a1a1a;
+            border-radius: 35px;
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            position: relative;
+            transition: transform 0.3s ease;
+            z-index: 10;
+            flex-shrink: 0;
+        }
+
+        .phone-mockup:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 25px;
+            background: #1a1a1a;
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .screen-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 35px 20px 20px;
+            color: white;
+        }
+
+        .screen-header h3 {
+            font-size: 1.2rem;
+            margin: 0;
+            color: white;
+            text-shadow: none;
+        }
+
+        .screen-content {
+            padding: 20px;
+            height: calc(100% - 75px);
+            overflow-y: auto;
+        }
+
+        .screen-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .screen-content::-webkit-scrollbar-thumb {
+            background: #00ff88;
+            border-radius: 4px;
+        }
+
+        .mock-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .mock-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .mock-text {
+            flex: 1;
+        }
+
+        .mock-text h4 {
+            font-size: 0.9rem;
+            color: #333;
+            margin: 0 0 4px 0;
+        }
+
+        .mock-text p {
+            font-size: 0.75rem;
+            color: #666;
+            margin: 0;
+            text-align: left;
+            text-shadow: none;
+        }
+
+        .mock-button {
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            color: #0a0e0d;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .mock-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .mock-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .mock-tab {
+            flex: 1;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .mock-tab.active {
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            color: #0a0e0d;
+        }
+
+        .mock-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .mock-map {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .mockup-label {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: white;
+            font-weight: bold;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Background padronizado com cores DigitalNest (verde/preto) */
+        .slide {
+            background: linear-gradient(135deg, #0a0e0d 0%, #1a1f1e 100%) !important;
+        }
+        
+        /* Variação com acento verde DigitalNest para slides específicos */
+        .slide:nth-child(1) { background: linear-gradient(135deg, #0a0e0d 0%, #1a2f23 100%) !important; }
+        .slide:nth-child(2) { background: linear-gradient(135deg, #0a0e0d 0%, #1a2f23 100%) !important; }
+        .slide:nth-child(3) { background: linear-gradient(135deg, #0d1f18 0%, #1a1f1e 100%) !important; }
+        .slide:nth-child(4) { background: linear-gradient(135deg, #0a0e0d 0%, #0d1f18 50%, #1a1f1e 100%) !important; }
+        .slide:nth-child(5) { background: linear-gradient(135deg, #0d1f18 0%, #1a2f23 100%) !important; }
+        .slide:nth-child(6) { background: linear-gradient(135deg, #0a0e0d 0%, #1a1f1e 100%) !important; }
+        .slide:nth-child(7) { background: linear-gradient(135deg, #0d1f18 0%, #1a2f23 100%) !important; }
+        .slide:nth-child(8) { background: linear-gradient(135deg, #0a0e0d 0%, #1a1f1e 100%) !important; }
+        .slide:nth-child(9) { background: linear-gradient(135deg, #0d1f18 0%, #1a1f1e 100%) !important; }
+        .slide:nth-child(10) { background: linear-gradient(135deg, #0a0e0d 0%, #1a2f23 100%) !important; }
+        .slide:nth-child(11) { background: linear-gradient(135deg, #0d1f18 0%, #1a1f1e 100%) !important; }
+        .slide:nth-child(12) { background: linear-gradient(135deg, #0a0e0d 0%, #0d1f18 50%, #1a1f1e 100%) !important; }
+        .slide:nth-child(13) { background: linear-gradient(135deg, #0d1f18 0%, #1a2f23 100%) !important; }
+        .slide:nth-child(14) { background: linear-gradient(135deg, #0a0e0d 0%, #1a1f1e 100%) !important; }
+        .slide:nth-child(15) { background: linear-gradient(135deg, #0a0e0d 0%, #1a2f23 100%) !important; }
+    </style>
+</head>
+<body>
+    <!-- Barra de Navegação Fixa no Topo -->
+    <div class="nav-bar">
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <button id="nextBtn" onclick="changeSlide(1)">Próximo →</button>
+        </div>
+        <div class="slide-counter">
+            <span id="currentSlide">1</span> / <span id="totalSlides">15</span>
+        </div>
+    </div>
+
+    <div class="presentation">
+        <!-- Slide 1: Título -->
+        <div class="slide active">
+            <div class="logo">🏙️</div>
+            <h1>Meu Jaboatão</h1>
+            <p class="subtitle">A cidade na palma da sua mão</p>
+            <p style="margin-top: 40px; font-size: 1.3rem;">
+                Aplicativo oficial da <span class="highlight">Prefeitura de Jaboatão dos Guararapes</span>
+            </p>
+            <p style="margin-top: 20px; font-size: 1rem; opacity: 0.8;">
+                Desenvolvido por <span class="highlight">DigitalNest</span>
+            </p>
+        </div>
+
+        <!-- Slide 2: Visão Geral -->
+        <div class="slide">
+            <h2>O que é o Meu Jaboatão?</h2>
+            <p>
+                Inspirado no conceito do <span class="highlight">Conecta Recife</span>, 
+                o Meu Jaboatão é uma plataforma completa que conecta você aos serviços 
+                da prefeitura, facilitando o acesso a informações e serviços essenciais 
+                para melhorar a qualidade de vida na cidade.
+            </p>
+            <p style="margin-top: 30px; font-size: 1.2rem;">
+                📱 Disponível para <span class="highlight">Android</span> e <span class="highlight">iOS</span>
+            </p>
+        </div>
+
+        <!-- Slide 3: Funcionalidades Principais -->
+        <div class="slide">
+            <h2>Funcionalidades Principais</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💳</div>
+                    <div class="feature-title">Pagamento de IPTU</div>
+                    <div class="feature-desc">Pague seu IPTU via Pix de forma rápida e segura</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏥</div>
+                    <div class="feature-title">Postos de Saúde</div>
+                    <div class="feature-desc">Localize postos e farmácias populares próximos</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💼</div>
+                    <div class="feature-title">Vagas de Emprego</div>
+                    <div class="feature-desc">Encontre oportunidades de trabalho na região</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💉</div>
+                    <div class="feature-title">Vacinação</div>
+                    <div class="feature-desc">Acompanhe campanhas e agendamentos de vacinas</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">♻️</div>
+                    <div class="feature-title">Coleta Seletiva</div>
+                    <div class="feature-desc">Saiba os dias e horários da coleta na sua região</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">❤️</div>
+                    <div class="feature-title">Doações</div>
+                    <div class="feature-desc">Contribua com campanhas sociais da prefeitura</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Solicitações do Cidadão -->
+        <div class="slide">
+            <h2>👥 Solicitações do Cidadão</h2>
+            <p style="margin-bottom: 40px;">
+                Reporte problemas urbanos diretamente para a prefeitura com foto e localização!
+            </p>
+            <div class="features-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="feature-card">
+                    <div class="feature-icon">🕳️</div>
+                    <div class="feature-title">Buracos na Pista</div>
+                    <div class="feature-desc">Identifique e reporte buracos nas vias</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚧</div>
+                    <div class="feature-title">Problemas de Capitação</div>
+                    <div class="feature-desc">Reporte problemas de drenagem e escoamento</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💡</div>
+                    <div class="feature-title">Postes Quebrados</div>
+                    <div class="feature-desc">Informe sobre iluminação pública com defeito</div>
+                </div>
+            </div>
+            <p style="margin-top: 40px; font-size: 1.2rem;">
+                📸 Com upload de fotos e 📍 localização automática via GPS
+            </p>
+        </div>
+
+        <!-- Slide 5: Arquitetura Técnica -->
+        <div class="slide">
+            <h2>🔧 Stack Tecnológica</h2>
+            <div class="two-columns">
+                <div class="column">
+                    <h4>Frontend & Mobile</h4>
+                    <ul>
+                        <li>React / React Native</li>
+                        <li>TypeScript</li>
+                        <li>Ant Design (UI)</li>
+                        <li>Leaflet (Mapas)</li>
+                        <li>PWA Support</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h4>Backend & Infraestrutura</h4>
+                    <ul>
+                        <li>Supabase (Database + Auth)</li>
+                        <li>Node.js + Express</li>
+                        <li>PostgreSQL</li>
+                        <li>Firebase Cloud Messaging</li>
+                        <li>Cloudinary (Storage)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Integrações -->
+        <div class="slide">
+            <h2>🔌 Integrações e APIs</h2>
+            <ul class="tech-list">
+                <li class="tech-item">
+                    <span class="tech-icon">🔐</span>
+                    <div>
+                        <strong>Autenticação:</strong> Supabase Auth / Firebase Auth (CPF, E-mail, Google)
+                    </div>
+                </li>
+                <li class="tech-item">
+                    <span class="tech-icon">💰</span>
+                    <div>
+                        <strong>Pagamentos:</strong> Pix via Gerencianet / Pagar.me / Mercado Pago
+                    </div>
+                </li>
+                <li class="tech-item">
+                    <span class="tech-icon">🗺️</span>
+                    <div>
+                        <strong>Mapas:</strong> Google Maps API / OpenStreetMap + Leaflet
+                    </div>
+                </li>
+                <li class="tech-item">
+                    <span class="tech-icon">🔔</span>
+                    <div>
+                        <strong>Notificações:</strong> Firebase Cloud Messaging (Push Notifications)
+                    </div>
+                </li>
+                <li class="tech-item">
+                    <span class="tech-icon">☁️</span>
+                    <div>
+                        <strong>Upload de Imagens:</strong> Supabase Storage / Cloudinary
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Slide 7: Mockups do App - Parte 1 -->
+        <div class="slide">
+            <h2 style="font-size: 2.5rem; margin-bottom: 10px;">📱 Interface do Aplicativo - Parte 1</h2>
+            <p style="margin-bottom: 15px; font-size: 1.1rem;">Fluxo de navegação e funcionalidades principais</p>
+            
+            <div class="mockup-container">
+                <!-- Mockup 1: Login -->
+                <div>
+                    <div class="phone-mockup">
+                        <div class="phone-notch"></div>
+                        <div class="phone-screen">
+                            <div class="screen-header">
+                                <h3>🏙️ Meu Jaboatão</h3>
+                            </div>
+                            <div class="screen-content">
+                                <div style="text-align: center; padding: 20px 0;">
+                                    <div style="font-size: 4rem; margin-bottom: 20px;">🏙️</div>
+                                    <h4 style="color: #333; font-size: 1.2rem; margin-bottom: 10px;">Bem-vindo!</h4>
+                                    <p style="color: #666; font-size: 0.85rem;">Faça login para acessar os serviços</p>
+                                </div>
+                                
+                                <input type="text" class="mock-input" placeholder="CPF ou E-mail" />
+                                <input type="password" class="mock-input" placeholder="Senha" />
+                                
+                                <button class="mock-button">Entrar</button>
+                                <button class="mock-button" style="background: white; color: #667eea; border: 2px solid #667eea; margin-top: 10px;">
+                                    Entrar com Google
+                                </button>
+                                
+                                <p style="text-align: center; margin-top: 20px; font-size: 0.8rem; color: #666;">
+                                    Não tem conta? <strong style="color: #667eea;">Cadastre-se</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mockup-label">1. Tela de Login</div>
+                </div>
+
+                <!-- Mockup 2: Dashboard -->
+                <div>
+                    <div class="phone-mockup">
+                        <div class="phone-notch"></div>
+                        <div class="phone-screen">
+                            <div class="screen-header">
+                                <h3>Olá, João! 👋</h3>
+                            </div>
+                            <div class="screen-content">
+                                <div class="mock-card">
+                                    <div class="mock-icon">💳</div>
+                                    <div class="mock-text">
+                                        <h4>IPTU 2025</h4>
+                                        <p>Pague seu imposto via Pix</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="mock-card">
+                                    <div class="mock-icon">🏥</div>
+                                    <div class="mock-text">
+                                        <h4>Postos de Saúde</h4>
+                                        <p>Encontre o posto mais próximo</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="mock-card">
+                                    <div class="mock-icon">💼</div>
+                                    <div class="mock-text">
+                                        <h4>Vagas de Emprego</h4>
+                                        <p>125 vagas disponíveis</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="mock-card">
+                                    <div class="mock-icon">🚧</div>
+                                    <div class="mock-text">
+                                        <h4>Fazer Solicitação</h4>
+                                        <p>Reporte problemas urbanos</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="mock-card">
+                                    <div class="mock-icon">💉</div>
+                                    <div class="mock-text">
+                                        <h4>Vacinação</h4>
+                                        <p>Consulte campanhas ativas</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mockup-label">2. Dashboard Principal</div>
+                </div>
+
+                <!-- Mockup 3: Pagamento IPTU -->
+                <div>
+                    <div class="phone-mockup">
+                        <div class="phone-notch"></div>
+                        <div class="phone-screen">
+                            <div class="screen-header">
+                                <h3>💳 Pagamento IPTU</h3>
+                            </div>
+                            <div class="screen-content">
+                                <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+                                    <p style="font-size: 0.8rem; color: #666; margin-bottom: 8px;">Valor a pagar:</p>
+                                    <h4 style="font-size: 1.8rem; color: #333; margin: 0;">R$ 1.250,00</h4>
+                                    <p style="font-size: 0.75rem; color: #666; margin-top: 5px;">Vencimento: 15/12/2025</p>
+                                </div>
+                                
+                                <div class="mock-tabs">
+                                    <div class="mock-tab active">Pix</div>
+                                    <div class="mock-tab">Boleto</div>
+                                    <div class="mock-tab">Cartão</div>
+                                </div>
+                                
+                                <div style="background: #fff; border: 2px dashed #667eea; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 20px;">
+                                    <div style="font-size: 0.75rem; color: #666; margin-bottom: 10px;">QR Code Pix</div>
+                                    <div style="width: 120px; height: 120px; background: linear-gradient(45deg, #667eea, #764ba2); margin: 0 auto; border-radius: 8px;"></div>
+                                    <p style="font-size: 0.7rem; color: #666; margin-top: 10px;">Escaneie para pagar</p>
+                                </div>
+                                
+                                <button class="mock-button">Copiar Código Pix</button>
+                                <button class="mock-button" style="background: white; color: #667eea; border: 2px solid #667eea; margin-top: 10px;">
+                                    Ver 2ª Via do Boleto
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mockup-label">3. Pagamento via Pix</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Mockups do App - Parte 2 -->
+        <div class="slide">
+            <h2 style="font-size: 2.5rem; margin-bottom: 10px;">📱 Interface do Aplicativo - Parte 2</h2>
+            <p style="margin-bottom: 15px; font-size: 1.1rem;">Sistema de solicitações e acompanhamento</p>
+            
+            <div class="mockup-container">
+                <!-- Mockup 4: Nova Solicitação -->
+                <div>
+                    <div class="phone-mockup">
+                        <div class="phone-notch"></div>
+                        <div class="phone-screen">
+                            <div class="screen-header">
+                                <h3>🚧 Nova Solicitação</h3>
+                            </div>
+                            <div class="screen-content">
+                                <div style="margin-bottom: 15px;">
+                                    <label style="font-size: 0.8rem; color: #666; display: block; margin-bottom: 5px;">Tipo de Problema</label>
+                                    <select class="mock-input" style="appearance: none;">
+                                        <option>Buraco na pista</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mock-map">🗺️</div>
+                                <p style="text-align: center; font-size: 0.75rem; color: #666; margin-bottom: 15px;">
+                                    📍 Rua Exemplo, 123 - Piedade
+                                </p>
+                                
+                                <div style="margin-bottom: 15px;">
+                                    <label style="font-size: 0.8rem; color: #666; display: block; margin-bottom: 5px;">Descrição</label>
+                                    <textarea class="mock-input" rows="3" placeholder="Descreva o problema..."></textarea>
+                                </div>
+                                
+                                <div style="border: 2px dashed #667eea; padding: 30px; border-radius: 12px; text-align: center; margin-bottom: 15px;">
+                                    <div style="font-size: 2rem; margin-bottom: 10px;">📷</div>
+                                    <p style="font-size: 0.8rem; color: #666;">Adicionar Foto</p>
+                                </div>
+                                
+                                <button class="mock-button">Enviar Solicitação</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mockup-label">4. Criar Solicitação</div>
+                </div>
+
+                <!-- Mockup 5: Minhas Solicitações -->
+                <div>
+                    <div class="phone-mockup">
+                        <div class="phone-notch"></div>
+                        <div class="phone-screen">
+                            <div class="screen-header">
+                                <h3>📋 Minhas Solicitações</h3>
+                            </div>
+                            <div class="screen-content">
+                                <div class="mock-card">
+                                    <div class="mock-icon">🕳️</div>
+                                    <div class="mock-text">
+                                        <h4>Buraco na Rua Exemplo</h4>
+                                        <p>Solicitado há 2 dias</p>
+                                        <span class="mock-status status-pending">Em análise</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mock-card">
+                                    <div class="mock-icon">💡</div>
+                                    <div class="mock-text">
+                                        <h4>Poste sem Iluminação</h4>
+                                        <p>Solicitado há 5 dias</p>
+                                        <span class="mock-status status-pending">Em andamento</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mock-card">
+                                    <div class="mock-icon">🚧</div>
+                                    <div class="mock-text">
+                                        <h4>Problema de Capitação</h4>
+                                        <p>Solicitado há 10 dias</p>
+                                        <span class="mock-status status-completed">Resolvido</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mock-card">
+                                    <div class="mock-icon">🕳️</div>
+                                    <div class="mock-text">
+                                        <h4>Buraco na Av. Principal</h4>
+                                        <p>Solicitado há 15 dias</p>
+                                        <span class="mock-status status-completed">Resolvido</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mockup-label">5. Acompanhamento</div>
+                </div>
+
+                <!-- Mockup 6: Vagas de Emprego -->
+                <div>
+                    <div class="phone-mockup">
+                        <div class="phone-notch"></div>
+                        <div class="phone-screen">
+                            <div class="screen-header">
+                                <h3>💼 Vagas de Emprego</h3>
+                            </div>
+                            <div class="screen-content">
+                                <input type="text" class="mock-input" placeholder="🔍 Buscar vagas..." />
+                                
+                                <div class="mock-card">
+                                    <div class="mock-icon">💼</div>
+                                    <div class="mock-text">
+                                        <h4>Auxiliar Administrativo</h4>
+                                        <p>Empresa ABC • Piedade</p>
+                                        <p style="margin-top: 5px; color: #667eea;">R$ 1.800,00</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="mock-card">
+                                    <div class="mock-icon">💼</div>
+                                    <div class="mock-text">
+                                        <h4>Vendedor(a)</h4>
+                                        <p>Loja XYZ • Centro</p>
+                                        <p style="margin-top: 5px; color: #667eea;">R$ 1.500,00 + comissão</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="mock-card">
+                                    <div class="mock-icon">💼</div>
+                                    <div class="mock-text">
+                                        <h4>Recepcionista</h4>
+                                        <p>Hotel 123 • Candeias</p>
+                                        <p style="margin-top: 5px; color: #667eea;">R$ 1.600,00</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="mock-card">
+                                    <div class="mock-icon">💼</div>
+                                    <div class="mock-text">
+                                        <h4>Atendente</h4>
+                                        <p>Restaurante • Prazeres</p>
+                                        <p style="margin-top: 5px; color: #667eea;">R$ 1.400,00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mockup-label">6. Oportunidades</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Painel Administrativo -->
+        <div class="slide">
+            <h2>👨‍💼 Painel Administrativo</h2>
+            <p style="margin-bottom: 40px;">
+                Dashboard completo para gestão municipal dos serviços e solicitações
+            </p>
+            <div class="features-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">Gestão de Solicitações</div>
+                    <div class="feature-desc">Visualize e gerencie todas as solicitações dos cidadãos em tempo real</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <div class="feature-title">Gestão de Usuários</div>
+                    <div class="feature-desc">Controle de acesso e perfis de usuários do sistema</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <div class="feature-title">Relatórios e Analytics</div>
+                    <div class="feature-desc">Métricas e indicadores sobre uso do aplicativo</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📢</div>
+                    <div class="feature-title">Comunicação</div>
+                    <div class="feature-desc">Envio de notificações e avisos para a população</div>
+                </div>
+            </div>
+            <p style="margin-top: 40px; font-size: 1.3rem;">
+                <span class="highlight">React + Ant Design + Supabase</span>
+            </p>
+        </div>
+
+        <!-- Slide 10: Benefícios para o Cidadão -->
+        <div class="slide">
+            <h2>✨ Benefícios para o Cidadão</h2>
+            <p style="margin-bottom: 40px;">Por que usar o Meu Jaboatão?</p>
+            <div class="two-columns">
+                <div class="column">
+                    <h4>🚀 Praticidade</h4>
+                    <ul>
+                        <li>Acesso 24/7 aos serviços</li>
+                        <li>Sem necessidade de deslocamento</li>
+                        <li>Interface intuitiva e fácil</li>
+                        <li>Tudo em um único app</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h4>⚡ Agilidade</h4>
+                    <ul>
+                        <li>Pagamentos instantâneos via Pix</li>
+                        <li>Respostas rápidas às solicitações</li>
+                        <li>Notificações em tempo real</li>
+                        <li>Informações sempre atualizadas</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="two-columns" style="margin-top: 20px;">
+                <div class="column">
+                    <h4>🔒 Segurança</h4>
+                    <ul>
+                        <li>Dados protegidos e criptografados</li>
+                        <li>Autenticação segura</li>
+                        <li>Pagamentos certificados</li>
+                        <li>Privacidade garantida</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h4>🤝 Transparência</h4>
+                    <ul>
+                        <li>Acompanhamento de solicitações</li>
+                        <li>Histórico completo</li>
+                        <li>Status em tempo real</li>
+                        <li>Canal direto com a prefeitura</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Arquitetura do Sistema -->
+        <div class="slide">
+            <h2>🏗️ Arquitetura do Sistema</h2>
+            <p style="margin-bottom: 30px;">Estrutura técnica robusta e escalável</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <div class="feature-title">Camada de Apresentação</div>
+                    <div class="feature-desc">React Native para mobile e React Web para dashboard administrativo</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <div class="feature-title">Camada de Negócio</div>
+                    <div class="feature-desc">Node.js + Express com APIs RESTful e validações de regras de negócio</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🗄️</div>
+                    <div class="feature-title">Camada de Dados</div>
+                    <div class="feature-desc">PostgreSQL (Supabase) com backup automático e replicação</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <div class="feature-title">Autenticação & Autorização</div>
+                    <div class="feature-desc">Supabase Auth com JWT tokens e controle de permissões por roles</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">☁️</div>
+                    <div class="feature-title">Armazenamento</div>
+                    <div class="feature-desc">Cloudinary para imagens e Supabase Storage para documentos</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📡</div>
+                    <div class="feature-title">Serviços Externos</div>
+                    <div class="feature-desc">APIs de pagamento (Pix), mapas (Google/OSM) e notificações (FCM)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Segurança e Privacidade -->
+        <div class="slide">
+            <h2>🔒 Segurança e Privacidade</h2>
+            
+            <div class="two-columns" style="gap: 50px; max-width: 1100px;">
+                <div class="column">
+                    <h4>🔐 Proteção de Dados</h4>
+                    <ul>
+                        <li>Criptografia AES-256 end-to-end</li>
+                        <li>Dados protegidos em trânsito e repouso</li>
+                        <li>Autenticação multifator (2FA)</li>
+                        <li>Tokens JWT com expiração automática</li>
+                        <li>Backup automatizado diário</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h4>✅ Conformidade Legal</h4>
+                    <ul>
+                        <li>100% em conformidade com LGPD</li>
+                        <li>Termos de uso e política de privacidade</li>
+                        <li>Direito ao esquecimento garantido</li>
+                        <li>Consentimento explícito do usuário</li>
+                        <li>Relatórios de proteção de dados</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="two-columns" style="gap: 50px; max-width: 1100px; margin-top: 30px;">
+                <div class="column">
+                    <h4>🔍 Auditoria e Monitoramento</h4>
+                    <ul>
+                        <li>Logs completos de todas as ações</li>
+                        <li>Rastreabilidade total do sistema</li>
+                        <li>Monitoramento 24/7</li>
+                        <li>Alertas de segurança em tempo real</li>
+                        <li>Controle de acesso baseado em roles</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h4>💳 Pagamentos Seguros</h4>
+                    <ul>
+                        <li>Certificação PCI-DSS</li>
+                        <li>Integração com gateways seguros</li>
+                        <li>Tokenização de dados sensíveis</li>
+                        <li>Proteção contra fraudes</li>
+                        <li>Transações criptografadas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Métricas e Impacto -->
+        <div class="slide">
+            <h2>📊 Métricas e Impacto Esperado</h2>
+            <p style="margin-bottom: 40px;">Resultados projetados para a cidade de Jaboatão</p>
+            <div class="features-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <div class="feature-title" style="font-size: 2.5rem; color: #00ff88;">50mil+</div>
+                    <div class="feature-desc">Usuários ativos esperados no primeiro ano</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <div class="feature-title" style="font-size: 2.5rem; color: #00ff88;">10mil+</div>
+                    <div class="feature-desc">Solicitações processadas mensalmente</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title" style="font-size: 2.5rem; color: #00ff88;">70%</div>
+                    <div class="feature-desc">Redução no tempo de atendimento</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <div class="feature-title" style="font-size: 2.5rem; color: #00ff88;">R$ 2M+</div>
+                    <div class="feature-desc">Em pagamentos de IPTU via app</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">😊</div>
+                    <div class="feature-title" style="font-size: 2.5rem; color: #00ff88;">90%</div>
+                    <div class="feature-desc">Satisfação dos usuários projetada</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌱</div>
+                    <div class="feature-title" style="font-size: 2.5rem; color: #00ff88;">40%</div>
+                    <div class="feature-desc">Redução no uso de papel</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Roadmap de Desenvolvimento -->
+        <div class="slide">
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">🗺️ Roadmap de Desenvolvimento</h2>
+            <p style="margin-bottom: 25px; font-size: 1.2rem;">Fases de implementação do projeto</p>
+            <ul class="tech-list" style="max-width: 900px;">
+                <li class="tech-item" style="padding: 15px 25px; margin: 10px 0;">
+                    <span class="tech-icon" style="font-size: 1.5rem;">1️⃣</span>
+                    <div style="font-size: 1rem;">
+                        <strong>Fase 1 - MVP (3 meses):</strong> Login, Dashboard, Pagamento IPTU, Solicitações básicas
+                    </div>
+                </li>
+                <li class="tech-item" style="padding: 15px 25px; margin: 10px 0;">
+                    <span class="tech-icon" style="font-size: 1.5rem;">2️⃣</span>
+                    <div style="font-size: 1rem;">
+                        <strong>Fase 2 - Expansão (2 meses):</strong> Vagas de emprego, Postos de saúde, Notificações
+                    </div>
+                </li>
+                <li class="tech-item" style="padding: 15px 25px; margin: 10px 0;">
+                    <span class="tech-icon" style="font-size: 1.5rem;">3️⃣</span>
+                    <div style="font-size: 1rem;">
+                        <strong>Fase 3 - Integração (2 meses):</strong> Vacinação, Coleta seletiva, Doações, Farmácias
+                    </div>
+                </li>
+                <li class="tech-item" style="padding: 15px 25px; margin: 10px 0;">
+                    <span class="tech-icon" style="font-size: 1.5rem;">4️⃣</span>
+                    <div style="font-size: 1rem;">
+                        <strong>Fase 4 - Painel Admin (2 meses):</strong> Dashboard administrativo completo
+                    </div>
+                </li>
+                <li class="tech-item" style="padding: 15px 25px; margin: 10px 0;">
+                    <span class="tech-icon" style="font-size: 1.5rem;">5️⃣</span>
+                    <div style="font-size: 1rem;">
+                        <strong>Fase 5 - Otimização (contínuo):</strong> Melhorias e novos recursos
+                    </div>
+                </li>
+            </ul>
+            <p style="margin-top: 25px; font-size: 1.1rem;">
+                ⏱️ <span class="highlight">Tempo total estimado: 9 meses</span> até o lançamento completo
+            </p>
+        </div>
+
+        <!-- Slide 15: Conclusão -->
+        <div class="slide">
+            <img src="digitalnest-logo.png" alt="DigitalNest Logo" class="logo-img" />
+            <div class="logo">🏙️</div>
+            <h1 style="font-size: 3.5rem;">Meu Jaboatão</h1>
+            <p class="subtitle" style="font-size: 1.5rem;">Transformando a relação entre cidade e cidadão</p>
+            
+            <div class="features-grid" style="grid-template-columns: repeat(4, 1fr); margin-top: 50px; max-width: 1000px;">
+                <div class="feature-card" style="padding: 20px;">
+                    <div class="feature-icon">✅</div>
+                    <div class="feature-title" style="font-size: 1.1rem;">Tecnologia<br/>Moderna</div>
+                </div>
+                <div class="feature-card" style="padding: 20px;">
+                    <div class="feature-icon">✅</div>
+                    <div class="feature-title" style="font-size: 1.1rem;">Segurança<br/>Garantida</div>
+                </div>
+                <div class="feature-card" style="padding: 20px;">
+                    <div class="feature-icon">✅</div>
+                    <div class="feature-title" style="font-size: 1.1rem;">Fácil de<br/>Usar</div>
+                </div>
+                <div class="feature-card" style="padding: 20px;">
+                    <div class="feature-icon">✅</div>
+                    <div class="feature-title" style="font-size: 1.1rem;">Impacto<br/>Real</div>
+                </div>
+            </div>
+
+
+            <p style="margin-top: 30px; font-size: 1.2rem;">
+                📧 contato@digitalnest.app.br | 🌐 www.digitalnest.app.br
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 15; // Atualizado para 15 slides
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            
+            if (n > totalSlides) {
+                currentSlide = totalSlides;
+            }
+            if (n < 1) {
+                currentSlide = 1;
+            }
+
+            // Fade out do slide atual
+            const currentSlideElement = document.querySelector('.slide.active');
+            if (currentSlideElement) {
+                currentSlideElement.style.opacity = '0';
+                
+                setTimeout(() => {
+                    slides.forEach(slide => {
+                        slide.classList.remove('active');
+                        slide.style.display = 'none';
+                    });
+                    
+                    // Fade in do novo slide
+                    const newSlide = slides[currentSlide - 1];
+                    newSlide.style.display = 'flex';
+                    newSlide.classList.add('active');
+                    
+                    // Força o reflow para a animação funcionar
+                    newSlide.offsetHeight;
+                    newSlide.style.opacity = '1';
+                }, 300);
+            } else {
+                // Primeira inicialização
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                    slide.style.display = 'none';
+                });
+                const newSlide = slides[currentSlide - 1];
+                newSlide.style.display = 'flex';
+                newSlide.classList.add('active');
+                newSlide.style.opacity = '1';
+            }
+
+            document.getElementById('currentSlide').textContent = currentSlide;
+            document.getElementById('totalSlides').textContent = totalSlides;
+
+            // Atualiza estado dos botões
+            document.getElementById('prevBtn').disabled = currentSlide === 1;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+        }
+
+        function changeSlide(n) {
+            currentSlide += n;
+            showSlide(currentSlide);
+        }
+
+        // Navegação por teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                changeSlide(1);
+            } else if (e.key === 'ArrowLeft') {
+                changeSlide(-1);
+            }
+        });
+
+        // Inicializa
+        showSlide(currentSlide);
+    </script>
+</body>
+</html>
